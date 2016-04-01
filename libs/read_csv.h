@@ -80,7 +80,7 @@ void readCSV_VariableNormal(const string line, int &index_read, string &string_r
  *      - Quote ("test")
  *      - Normal (test)
  */
-string readCSV_Variable(string line, int &index_read, string &string_read) {
+void readCSV_Variable(string line, int &index_read, string &string_read) {
     if (line[index_read] == file_string_quote) {
         readCSV_VariableQuote(line, index_read, string_read);
     }

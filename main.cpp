@@ -14,7 +14,7 @@ struct Student {
     string avatar;
     string info;
     string *hobbies;
-    int total_hobbies = 0;
+    int total_hobbies;
 };
 
 string getHobbyString(string *hobbies, int total_hobbies) {
@@ -42,16 +42,17 @@ void importStudents(Student *&students, int total_students, string *string_lines
         /* Read hobbies */
         string tmp = "tmp";
         int hobbies = 0;
+        students[i].total_hobbies = 0;
         while (tmp != "") {
             tmp = "";
             readCSV_Variable(line, index_read, tmp);
             if (tmp != "") {
                 allocate_memory_string(students[i].hobbies, hobbies);
                 students[i].hobbies[hobbies] = tmp;
-                students[i].total_hobbies++;
                 hobbies++;
             }
         }
+        students[i].total_hobbies = hobbies;
     }
 }
 
@@ -109,7 +110,7 @@ int main() {
         delete[] string_lines;
         showStudents(students, total_students);
         exportStudents(students, total_students);
-        cout <<"\n Build file success. Please view files in folder /public";
+        cout <<"\nBuild file successed. Please view files in folder /public"<<endl;
         delete[] students;
     }
 
