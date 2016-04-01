@@ -7,7 +7,7 @@ Chỉnh sửa file đầu vào: `/data/students.csv`
 Thư mục xuất: `/public`
 
 ## Built with CLion
-Complie on linux, mac os:
+Compile on linux, mac os:
 `git clone https://github.com/thanhtungdp/export-csv-to-html-cplusplus.git demo_export`
 
 `cd demo_export`
