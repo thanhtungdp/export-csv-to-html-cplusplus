@@ -14,13 +14,23 @@ struct Student {
     string avatar;
     string info;
     string *hobbies;
+    int total_hobbies = 0;
 };
+
+string getHobbyString(string *hobbies, int total_hobbies) {
+    string hobby_string = "";
+    for (int i = 0; i < total_hobbies; ++i) {
+        hobby_string += "<li>" + hobbies[i] + "</li>";
+    }
+    return hobby_string;
+}
 
 void importStudents(Student *&students, int total_students, string *string_lines) {
     students = new Student[total_students];
     for (int i = 0; i < total_students; i++) {
         int index_read = 0;
         string line = string_lines[i];
+        /* Read information basic */
         readCSV_Variable(line, index_read, students[i].id);
         readCSV_Variable(line, index_read, students[i].name);
         readCSV_Variable(line, index_read, students[i].faculty);
@@ -28,6 +38,21 @@ void importStudents(Student *&students, int total_students, string *string_lines
         readCSV_Variable(line, index_read, students[i].birthday);
         readCSV_Variable(line, index_read, students[i].avatar);
         readCSV_Variable(line, index_read, students[i].info);
+
+        /* Read hobbies */
+        string tmp = "tmp";
+        int hobbies = 0;
+        while (tmp != "") {
+            tmp = "";
+            readCSV_Variable(line, index_read, tmp);
+            if (tmp != "") {
+                allocate_memory_string(students[i].hobbies, hobbies);
+                students[i].hobbies[hobbies] = tmp;
+                students[i].total_hobbies++;
+                hobbies++;
+            }
+        }
+        cout << getHobbyString(students[i].hobbies, students[i].total_hobbies);
     }
 }
 
@@ -46,11 +71,15 @@ void showStudents(Student *students, int total_students) {
 void exportStudentToHtml(Student student) {
     string *lines_template;
     int total_lines = Template_Read(lines_template);
-    const int total_variables = 7;
-    string variables[total_variables] = {"$id", "$name", "$birthday", "$faculty", "$school_year", "$avatar", "$info"};
-    string values[total_variables] = {student.id, student.name, student.birthday, student.faculty, student.school_year,
-                                      student.avatar,
-                                      student.info};
+    const int total_variables = 8;
+    string variables[total_variables] = {
+            "$id", "$name", "$birthday", "$faculty",
+            "$school_year", "$avatar", "$info", "$hobbies"
+    };
+    string values[total_variables] = {
+            student.id, student.name, student.birthday, student.faculty,
+            student.school_year, student.avatar, student.info, getHobbyString(student.hobbies, student.total_hobbies)
+    };
     Template_PutVariable(lines_template, total_lines, variables, values, total_variables);
     Template_WriteFile(lines_template, total_lines, student.id);
     delete[] lines_template;
