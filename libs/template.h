@@ -13,6 +13,11 @@ using namespace std;
 const string profile_template = "data/templates/profile.html";
 const string profile_public_folder = "public";
 
+/**
+ * Read file template: (profile_template | profile.html)
+ * And push to *lines_templates[]
+ * return @total_lines in template
+ */
 int Template_Read(string *&lines_template) {
     ifstream file(profile_template);
     int line = 0;
@@ -27,6 +32,11 @@ int Template_Read(string *&lines_template) {
     return line;
 }
 
+/**
+ * Change variable in template
+ * Example: "xin chao $name"
+ * Change to: "xin chao thanh tung"
+ */
 void Template_ReplaceVariable(string &str, const string &from, const string &to) {
     if (from.empty())
         return;
@@ -37,13 +47,19 @@ void Template_ReplaceVariable(string &str, const string &from, const string &to)
     }
 }
 
+/**
+ * Change variable in line;
+ */
 void Template_PutVariableToLine(string &line, string variables[], string values[], int total_variables) {
     for (int i = 0; i < total_variables; ++i) {
         Template_ReplaceVariable(line, variables[i], values[i]);
     }
 }
 
-
+/**
+ * Put variables
+ * Example: [$name,$age] ["thanh tung","18"]
+ */
 void Template_PutVariable(string *&lines_template, int lines, string variables[], string values[],
                           int total_variables) {
     for (int i = 0; i < lines; ++i) {
@@ -51,10 +67,13 @@ void Template_PutVariable(string *&lines_template, int lines, string variables[]
     }
 }
 
-void Template_WriteFile(string *lines_template, int lines, string file) {
-    file = profile_public_folder + "/" + file + ".html";
+/**
+ * Write out file from lines_template
+ */
+void Template_WriteFile(string *lines_template, int lines, string file_name) {
+    file_name = profile_public_folder + "/" + file_name + ".html";
     ofstream file_template;
-    file_template.open(file, ios::out);
+    file_template.open(file_name, ios::out);
     for (int i = 0; i < lines; ++i) {
         file_template << lines_template[i];
         file_template << "\n";

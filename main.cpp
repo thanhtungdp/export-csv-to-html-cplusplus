@@ -17,6 +17,11 @@ struct Student {
     int total_hobbies;
 };
 
+/**
+ * Convert hobbies[] to string lists
+ * Ex:  <li>1</li>
+ *      <li>2</li>
+ */
 string getHobbyString(string *hobbies, int total_hobbies) {
     string hobby_string = "";
     for (int i = 0; i < total_hobbies; ++i) {
@@ -25,6 +30,10 @@ string getHobbyString(string *hobbies, int total_hobbies) {
     return hobby_string;
 }
 
+/**
+ * Import students to Students from string_lines
+ * string_lines have read from CSV
+ */
 void importStudents(Student *&students, int total_students, string *string_lines) {
     students = new Student[total_students];
     for (int i = 0; i < total_students; i++) {
@@ -68,6 +77,9 @@ void showStudents(Student *students, int total_students) {
     }
 }
 
+/**
+ * Export student to HTML
+ */
 void exportStudentToHtml(Student student) {
     string *lines_template;
     int total_lines = Template_Read(lines_template);
@@ -85,6 +97,9 @@ void exportStudentToHtml(Student student) {
     delete[] lines_template;
 }
 
+/**
+ * Export all students
+ */
 void exportStudents(Student *students, int total_students) {
     for (int i = 0; i < total_students; i++) {
         exportStudentToHtml(students[i]);

@@ -7,6 +7,11 @@
 
 #include <iostream>
 using namespace std;
+/**
+ * Allocate memory for string[] in process, but change current value
+ * Example: str = new int[3];
+ * use function => push str[4] (up 1 string)
+ */
 void allocate_memory_string(string *&a, int n) {
     string *Temp = new string[n]; // Khởi tạo và cấp phát 1 mảng phụ Temp chứa các phần tử mảng a
     for (int i = 0; i < n; i++) {
@@ -18,4 +23,5 @@ void allocate_memory_string(string *&a, int n) {
     }
     delete[] Temp;
 }
+
 #endif //DO_AN_CUOI_KY_MEMORY_H
