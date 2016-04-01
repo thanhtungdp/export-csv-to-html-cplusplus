@@ -52,7 +52,6 @@ void importStudents(Student *&students, int total_students, string *string_lines
                 hobbies++;
             }
         }
-        cout << getHobbyString(students[i].hobbies, students[i].total_hobbies);
     }
 }
 
@@ -110,6 +109,7 @@ int main() {
         delete[] string_lines;
         showStudents(students, total_students);
         exportStudents(students, total_students);
+        cout <<"\n Build file success. Please view files in folder /public";
         delete[] students;
     }
 
